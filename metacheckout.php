@@ -21,7 +21,8 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
   if ($checkoutPassword == $pas) {
     //if (!valid_git_branch($ver)) {
       $message  = 'Last ver = '.$lastver.'<br />';
-      shell_exec('eval `ssh-agent` 2>&1; ssh-add '.$githubKey.' 2>&1; cd '.$projectGithubDirectory.' 2>&1; git fetch github '.$ver.':'.$ver.' -v 2>&1; git --work-tree='.$projectWorkingDirectory.' checkout -f '.$ver.' 2>&1');
+      $output = shell_exec('eval `ssh-agent` 2>&1; ssh-add '.$githubKey.' 2>&1; cd '.$projectGithubDirectory.' 2>&1; git fetch github '.$ver.':'.$ver.' -v 2>&1; git --work-tree='.$projectWorkingDirectory.' checkout -f '.$ver.' 2>&1');
+      $message .= $output;
       $file = fopen($lastVersionFile, "w");
       fwrite($file, $ver);
       fclose($file);
@@ -95,7 +96,7 @@ function valid_git_branch($branch_name) {
 </head>  
    
 <body>
-  <h3>Befittd checkout API</h3>
+  <h3>NFC checkout API</h3>
   <div id="password-reset-box">
     <div id="passwords-div">
       <h4>Please enter password and Branch version:</h4>

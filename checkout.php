@@ -6,19 +6,22 @@ require_once "checkoutconfig.php";
 $lastver = file_get_contents("/var/checkout/lastversion.php");        //Get previous file version
 
 $message = 'Last ver = '.$lastver;
-if (array_key_exists('version', $_POST) && array_key_exists('password', $_POST)) {
+//if (array_key_exists('version', $_POST) && array_key_exists('password', $_POST)) {
+if (isset($_POST['version']) && isset($_POST['password'])) {
   $ver = $_POST['version'];
   $pas = $_POST['password'];
 
-  if($checkoutPassword != $pas) {
-    $message = "Wrong password";
-  } else if (!valid_git_branch($ver)) {
-    $message = "Invalid branch name";
+  if ($checkoutPassword == $pas) {
+    if (!valid_git_branch($ver)) {
+      $message  = 'Last ver = '.$lastver.'<br />';
+      shell_exec('eval `ssh-agent` 2>&1; ssh-add '.$githubKey.' 2>&1; cd '.$projectGithubDirectory.' 2>&1; git fetch github '.$ver.':'.$ver.' -v 2>&1; git --work-tree='.$projectWorkingDirectory.' checkout -f '.$ver.' 2>&1');
+      $file = fwrite(fopen("/var/checkout/lastversion.php", "w"), $ver);
+      fclose($file);
+    } else {
+      $message = "Invalid branch name";
+    }
   } else {
-    $message  = 'Last ver = '.$lastver.'<br />';
-    shell_exec('eval `ssh-agent` 2>&1; ssh-add '.$githubKey.' 2>&1; cd '.$projectGithubDirectory.' 2>&1; git fetch github '.$ver.':'.$ver.' -v 2>&1; git --work-tree='.$projectWorkingDirectory.' checkout -f '.$ver.' 2>&1');
-    $file = fwrite(fopen("/var/checkout/lastversion.php", "w"), $ver);
-    fclose($file);
+    $message = "Wrong password";
   }
 }
 
@@ -80,7 +83,7 @@ function valid_git_branch($branch_name) {
     
 <head>
   <meta charset="utf-8" />
-  <title>Befittd checkout API</title>
+  <title>NFC Server checkout API</title>
   <link rel="stylesheet" type="text/css" href="/media/css/bootstrap.css"/>
   <link rel="stylesheet" type="text/css" href="/media/css/datepicker.css" />
   <link rel="stylesheet" type="text/css" href="/media/css/style.css" />

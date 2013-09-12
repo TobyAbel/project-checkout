@@ -3,7 +3,14 @@
 // Test
 
 require_once "checkoutconfig.php";
-$lastver = file_get_contents("/var/checkout/lastversion.php");        //Get previous file version
+
+$lastVersionFile = "/var/www/project-checkout/lastversion.php";
+if (file_exists($lastVersionFile)) {
+  $lastver = file_get_contents($lastVersionFile);        //Get previous file version
+} else {
+  $lastver = 0;
+  file_put_contents($lastVersionFile, $lastver);
+}
 
 $message = 'Last ver = '.$lastver;
 //if (array_key_exists('version', $_POST) && array_key_exists('password', $_POST)) {
@@ -15,7 +22,8 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
     //if (!valid_git_branch($ver)) {
       $message  = 'Last ver = '.$lastver.'<br />';
       shell_exec('eval `ssh-agent` 2>&1; ssh-add '.$githubKey.' 2>&1; cd '.$projectGithubDirectory.' 2>&1; git fetch github '.$ver.':'.$ver.' -v 2>&1; git --work-tree='.$projectWorkingDirectory.' checkout -f '.$ver.' 2>&1');
-      $file = fwrite(fopen("/var/checkout/lastversion.php", "w"), $ver);
+      $file = fopen("/var/checkout/lastversion.php", "w");
+      fwrite($file, $ver);
       fclose($file);
     // } else {
     //   $message = "Invalid branch name";

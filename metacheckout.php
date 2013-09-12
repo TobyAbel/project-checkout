@@ -21,7 +21,7 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
   if ($checkoutPassword == $pas) {
     //if (!valid_git_branch($ver)) {
       $message  = 'Last ver = '.$lastver.'<br />';
-      $commands = "cd ".$projectGithubDirectory." 2>&1; ssh-agent bash -c 'ssh -T git@github.org 2>&1; ssh-add ".$githubKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectWorkingDirectory." checkout -f ".$ver." 2>&1' 2>&1";
+      $commands = "cd ".$projectGithubDirectory." 2>&1; ssh-agent bash -c 'ssh-add ".$githubKey." 2>&1; ssh -T git@github.org 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectWorkingDirectory." checkout -f ".$ver." 2>&1' 2>&1";
       $output = shell_exec($commands);
       $message .= str_replace(';', ';'.PHP_EOL, $commands).PHP_EOL;
       $message .= $output;

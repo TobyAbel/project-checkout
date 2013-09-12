@@ -14,7 +14,7 @@ if (array_key_exists('version', $_POST) && array_key_exists('password', $_POST))
   } else if (!valid_git_branch($ver)) {
     $message = "Invalid branch name";
   } else {
-    $message  = 'Last ver = '.$lastver.'<br />'
+    $message  = 'Last ver = '.$lastver.'<br />';
     shell_exec('eval `ssh-agent` 2>&1; ssh-add '.$githubKey.' 2>&1; cd '.$projectGithubDirectory.' 2>&1; git fetch github '.$ver.':'.$ver.' -v 2>&1; git --work-tree='.$projectWorkingDirectory.' checkout -f '.$ver.' 2>&1');
     $file = fwrite(fopen("/var/checkout/lastversion.php", "w"), $ver);
     fclose($file);

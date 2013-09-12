@@ -7,5 +7,5 @@ $remoteRepo = "0";					//*** Enter repo remote here
 $projectWorkingDirectory = "/var/www/project-checkout/";
 $github = "https://github.com/TobyAbel/project-checkout/";		//Github project location.
 
-
+$lastVersionFile = "/var/www/project-checkout/lastversion.php";
 ?>

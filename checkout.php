@@ -9,6 +9,7 @@ if (file_exists($lastVersionFile)) {
   $lastver = file_get_contents($lastVersionFile);        //Get previous file version
 } else {
   $lastver = 0;
+  shell_exec("touch $lastVersionFile");
   file_put_contents($lastVersionFile, $lastver);
 }
 
@@ -92,13 +93,6 @@ function valid_git_branch($branch_name) {
 <head>
   <meta charset="utf-8" />
   <title>NFC Server checkout API</title>
-  <link rel="stylesheet" type="text/css" href="/media/css/bootstrap.css"/>
-  <link rel="stylesheet" type="text/css" href="/media/css/datepicker.css" />
-  <link rel="stylesheet" type="text/css" href="/media/css/style.css" />
-  <link rel="stylesheet" type="text/css" href="/media/css/restorepass.css" />
-  <script type="text/javascript" src="/media/js/libs/jquery-1.8.3.min.js"></script>
-  <script type="text/javascript" src="/media/js/libs/animate.js"></script>
-  <script type="text/javascript" src="/media/js/libs/bootstrap.min.js"></script>
 </head>  
    
 <body>
@@ -109,18 +103,14 @@ function valid_git_branch($branch_name) {
       <br />
       <form id="passwords-form" action="" method="POST">
         <div class="restore-page">
-          <input type="password" id="password" name="password" placeholder="Password"
-            class="input-large close-join" />
+          <input type="password" id="password" name="password" placeholder="Password" class="input-large close-join" />
           <div class="start-hidden alert pozRestore" id="resto-pass">
-            <strong><span>Invalid password</span></strong> 
           </div>
-          <br/>
+          <br />
         </div>
         <div class="restore-page">
-          <input type="text" id="version" name="version" placeholder="Branch version"
-            title="Please retype your password" class="input-large close-join"/>
+          <input type="text" id="version" name="version" placeholder="Branch version" title="Please retype your password" class="input-large close-join"/>
           <div class="start-hidden alert pozRestore" id="resto-repass">
-            <strong><span>Invalid passwords</span></strong>
           </div>
         </div>
         <button class="btn btn-primary" name="submit" data-dismiss="modal" id="checkout" type="submit">Checkout</button>
@@ -133,16 +123,10 @@ function valid_git_branch($branch_name) {
       </div>
     </div>
   </div>
-<?php  
-//}else{
-?>
  <div id="password-reset-box">
    <h4>Response message:</h4>
    <br/>
    <pre><?=$message?></pre>
  </div>
-<?php  
-
-?>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <?php
 //Checkout API
+// Test
 
 require_once "checkoutconfig.php";
 $lastver = file_get_contents("/var/checkout/lastversion.php");        //Get previous file version

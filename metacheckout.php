@@ -23,7 +23,7 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
       $message  = 'Last ver = '.$lastver.'<br />';
       $commands = 'eval `ssh-agent` 2>&1; ssh-add '.$githubKey.' 2>&1; cd '.$projectGithubDirectory.' 2>&1; git fetch github '.$ver.':'.$ver.' -v 2>&1; git --work-tree='.$projectWorkingDirectory.' checkout -f '.$ver.' 2>&1';
       $output = shell_exec($commands);
-      $message .= $commands.PHP_EOL;
+      $message .= str_replace(';', ';'.PHP_EOL, $commands).PHP_EOL;
       $message .= $output;
       $file = fopen($lastVersionFile, "w");
       fwrite($file, $ver);

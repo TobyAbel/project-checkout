@@ -3,6 +3,7 @@
 // Test
 
 require_once "checkoutconfig.php";
+$message = '';
 
 if (file_exists($lastVersionFile)) {
   $lastver = file_get_contents($lastVersionFile); // Get previous file version
@@ -18,17 +19,28 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
   $pas = $_POST['password'];
 
   if ($checkoutPassword == $pas) {
-    //if (!valid_git_branch($ver)) {
-      $message  = 'Boom.'.PHP_EOL.'Last ver = '.$lastver.'<br />';
-      $commands = "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectWorkingDirectory." checkout -f ".$ver." 2>&1";
+
+    // if $projectGithubDirectory does not contain a git repo
+      // make one.
+    if (file_exists($projectGithubDirectory.'HEAD')) {// It's a silly hack but it doesn't need to be resilient
+      $commands = "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubKey." 2>&1; git clone --bare ".$github." 2>&1;";
+      $output = shell_exec($commands);
+      $message .= $commands.PHP_EOL.$output.PHP_EOL;
+    }
+    if (valid_git_branch($ver)) {
+      $message  .= 'Last ver = '.$lastver.'<br />';
+      $commands = "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubKey." 2>&1; git fetch github ".$ver.":".$ver." 2>&1; git --work-tree=".$projectWorkingDirectory." checkout -f ".$ver." 2>&1";
       $output = shell_exec($commands);
       $message .= str_replace(';', ';'.PHP_EOL, $commands).PHP_EOL;
       $message .= $output;
       $file = fopen($lastVersionFile, "w");
       fwrite($file, $ver);
       fclose($file);
+    } else {
+      $message .= 'invalid git branch: '.$ver;
+    }
   } else {
-    $message = "Wrong password";
+    $message .= "Wrong password";
   }
 }
 

@@ -1,11 +1,9 @@
 <?php
+	$checkoutPassword = 111;
+	$githubKey = "/home/www-data/.ssh/nfcserverkey";
+	$projectGithubDirectory = "/home/ubuntu/nfc-members-card-server/ ";		//Producct github directory
+	$projectWorkingDirectory = "/var/www/nfc-members-card-server/";
+	$github = "https://github.com/TobyAbel/nfc-members-card-server/";		//Github project location.
 
-$checkoutPassword = 111;
-$githubKey = "/home/www-data/.ssh/checkoutkey";
-$projectGithubDirectory = "/home/ubuntu/project-checkout/ ";		//Producct github directory
-$remoteRepo = "0";					//*** Enter repo remote here
-$projectWorkingDirectory = "/var/www/project-checkout/";
-$github = "https://github.com/TobyAbel/project-checkout/";		//Github project location.
-
-$lastVersionFile = "/var/www/project-checkout/lastversion.php";
+	$lastVersionFile = "/home/www-data/nfc-members-card-server/lastversion.php";
 ?>

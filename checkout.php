@@ -13,40 +13,25 @@ if (file_exists($lastVersionFile)) {
 }
 
 $message = 'Last ver = '.$lastver;
-//if (array_key_exists('version', $_POST) && array_key_exists('password', $_POST)) {
 if (isset($_POST['version']) && isset($_POST['password'])) {
   $ver = $_POST['version'];
   $pas = $_POST['password'];
 
   if ($checkoutPassword == $pas) {
     //if (!valid_git_branch($ver)) {
-      $message  = 'Last ver = '.$lastver.'<br />';
-      shell_exec('eval `ssh-agent` 2>&1; ssh-add '.$githubKey.' 2>&1; cd '.$projectGithubDirectory.' 2>&1; git fetch github '.$ver.':'.$ver.' -v 2>&1; git --work-tree='.$projectWorkingDirectory.' checkout -f '.$ver.' 2>&1');
+      $message  = 'Boom.'.PHP_EOL.'Last ver = '.$lastver.'<br />';
+      $commands = "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectWorkingDirectory." checkout -f ".$ver." 2>&1";
+      $output = shell_exec($commands);
+      $message .= str_replace(';', ';'.PHP_EOL, $commands).PHP_EOL;
+      $message .= $output;
       $file = fopen($lastVersionFile, "w");
       fwrite($file, $ver);
       fclose($file);
-    // } else {
-    //   $message = "Invalid branch name";
-    // }
   } else {
     $message = "Wrong password";
   }
 }
 
-// function fetch($ver,$redis){ 
-// //  $chmod    = "chmod 777 -R /var/www/";
-//   $agent    = "eval `ssh-agent` 2>&1";
-//   $key      = "ssh-add /etc/befittd/befittd_github_key 2>&1";
-//   $fetch    = 'cd /home/ubuntu/befittd/ 2>&1 ; echo "folder changed"; git fetch github '.$ver.':'.$ver.' -v 2>&1';
-//   $checkout = 'git --work-tree=/var/befittd/ checkout -f '.$ver.' 2>&1';
-//   $command  = $agent.' ; echo "did agent command"; '.$key.' ; echo "did key command"; '.$fetch.' ; echo "did fetch command"; '.$checkout. '; echo "did checkout command";';
-//   $output   = shell_exec($command); 
-  
-
-  // $redis->set("API:checkout:ver",$ver);
-//   return "exec command: ".$command.'</br>Output: '
-//             .nl2br($output).'<br />';
-// }
 
 /*
   Checks that the branch name passed contains only ASCII letters, numbers, hyphens, underscores, and single dots, and
@@ -91,11 +76,11 @@ function valid_git_branch($branch_name) {
     
 <head>
   <meta charset="utf-8" />
-  <title>NFC Server checkout API</title>
+  <title>NFC Server checkout API (nfc-members-card)</title>
 </head>  
    
 <body>
-  <h3>Befittd checkout API</h3>
+  <h3>NFC checkout API</h3>
   <div id="password-reset-box">
     <div id="passwords-div">
       <h4>Please enter password and Branch version:</h4>

@@ -12,6 +12,9 @@ if(!file_exists($directory)){
 if(!file_exists($projectGithubDirectory)){
   mkdir($projectGithubDirectory);
 }
+if(!file_exists($projectWorkingDirectory)){
+  mkdir($projectWorkingDirectory);
+}
 
 
 if (file_exists($lastVersionFile)) {

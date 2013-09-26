@@ -1,8 +1,8 @@
 <?php
-//Checkout API
-// Test
 
 require_once "metacheckoutconfig.php";
+require_once "checkoutconfig.php";
+
 
 if (file_exists($lastVersionFile)) {
   $lastver = file_get_contents($lastVersionFile); // Get previous file version
@@ -28,28 +28,13 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
       $file = fopen($lastVersionFile, "w");
       fwrite($file, $ver);
       fclose($file);
-    // } else {
-    //   $message = "Invalid branch name";
-    // }
+
+      shell_exec("mv $githubkeyorigin $githubKey");
+
   } else {
     $message = "Wrong password";
   }
 }
-
-// function fetch($ver,$redis){ 
-// //  $chmod    = "chmod 777 -R /var/www/";
-//   $agent    = "eval `ssh-agent` 2>&1";
-//   $key      = "ssh-add /etc/befittd/befittd_github_key 2>&1";
-//   $fetch    = 'cd /home/ubuntu/befittd/ 2>&1 ; echo "folder changed"; git fetch github '.$ver.':'.$ver.' -v 2>&1';
-//   $checkout = 'git --work-tree=/var/befittd/ checkout -f '.$ver.' 2>&1';
-//   $command  = $agent.' ; echo "did agent command"; '.$key.' ; echo "did key command"; '.$fetch.' ; echo "did fetch command"; '.$checkout. '; echo "did checkout command";';
-//   $output   = shell_exec($command); 
-  
-
-  // $redis->set("API:checkout:ver",$ver);
-//   return "exec command: ".$command.'</br>Output: '
-//             .nl2br($output).'<br />';
-// }
 
 /*
   Checks that the branch name passed contains only ASCII letters, numbers, hyphens, underscores, and single dots, and

@@ -5,6 +5,11 @@
 require_once "checkoutconfig.php";
 $message = '';
 
+if(!file_exists($directory)){
+  mkdir($directory);
+}
+
+
 if (file_exists($lastVersionFile)) {
   $lastver = file_get_contents($lastVersionFile); // Get previous file version
 } else {

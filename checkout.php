@@ -9,7 +9,7 @@ if(!file_exists($directory)){
   mkdir($directory);
 }
 
-if(!file_exists($directory)){
+if(!file_exists($projectGithubDirectory)){
   mkdir($projectGithubDirectory);
 }
 

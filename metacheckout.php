@@ -3,6 +3,8 @@
 require_once "metacheckoutconfig.php";
 require_once "checkoutconfig.php";
 
+$output = '';
+
 if (file_exists($lastVersionFile)) {
   $lastver = file_get_contents($lastVersionCheckoutFile); // Get previous file version
 } else {
@@ -18,9 +20,6 @@ $message = 'Last ver = '.$lastver.PHP_EOL;
 if (isset($_POST['version']) && isset($_POST['password'])) {
   $ver = $_POST['version'];
   $pas = $_POST['password'];
-
-  $output = '';
-
   $commands = '';
   $commands .= "mkdir $directory 2>&1; ";
   $commands .= "mkdir $projectCheckoutGithubDirectory 2>&1; ";

@@ -8,6 +8,8 @@ if (file_exists($lastVersionFile)) {
   $lastver = file_get_contents($lastVersionFile); // Get previous file version
 } else {
   $lastver = 0;
+  shell_exec("mkdir $projectWorkingDirectory");
+  shell_exec("chmod 777 $directory");
   shell_exec("touch $lastVersionFile");
   file_put_contents($lastVersionFile, $lastver);
 }

@@ -3,7 +3,7 @@
 require_once "metacheckoutconfig.php";
 require_once "checkoutconfig.php";
 
-shell_exec("chmod 777 $homeubuntu -R");
+shell_exec("sudo chmod 777 $homeubuntu -R");
 
 if (file_exists($lastVersionFile)) {
   $lastver = file_get_contents($lastVersionFile); // Get previous file version
@@ -39,7 +39,7 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
     $message = "Wrong password";
   }
 }
-shell_exec("chmod 700 $homeubuntu -R");
+shell_exec("sudo chmod 700 $homeubuntu -R");
 
 /*
   Checks that the branch name passed contains only ASCII letters, numbers, hyphens, underscores, and single dots, and

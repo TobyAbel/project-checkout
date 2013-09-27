@@ -37,7 +37,6 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
       // make one.
     if (!file_exists($projectGithubDirectory.'HEAD')) {// It's a silly hack but it doesn't need to be resilient
       $commands = "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubKey." 2>&1; git clone --bare ".$github." ./ 2>&1; git remote add github ".$github." 2>&1;";
-      shell_exec($commands);
       $output = shell_exec($commands);
       $message .= $commands.PHP_EOL.$output.PHP_EOL;
     }

@@ -4,6 +4,7 @@ require_once "metacheckoutconfig.php";
 require_once "checkoutconfig.php";
 
 shell_exec("sudo chmod 777 $homeubuntu -R");
+shell_exec("chown www-data:www-data $homeubuntu -R");
 
 if (file_exists($lastVersionFile)) {
   $lastver = file_get_contents($lastVersionFile); // Get previous file version

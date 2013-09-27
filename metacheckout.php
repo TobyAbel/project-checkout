@@ -29,7 +29,7 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
       fwrite($file, $ver);
       fclose($file);
 
-      shell_exec("mv $githubkeyorigin $githubKey");
+//      shell_exec("mv $githubkeyorigin $githubKey");
 
   } else {
     $message = "Wrong password";

@@ -3,7 +3,7 @@
 require_once "metacheckoutconfig.php";
 require_once "checkoutconfig.php";
 
-
+Print "placeholder";
 if (file_exists($lastVersionFile)) {
   $lastver = file_get_contents($lastVersionFile); // Get previous file version
 } else {

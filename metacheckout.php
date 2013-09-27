@@ -22,10 +22,8 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
   $output = '';
 
   $commands = '';
-//  $commands .= "chmod 777 $homeroot 2>&1; ";
   $commands .= "mkdir $directory 2>&1; ";
   $commands .= "mkdir $projectCheckoutGithubDirectory 2>&1; ";
-//  $commands .= "chmod 777 $projectCheckoutGithubDirectory 2>&1; ";
 
   if ($checkoutPassword == $pas) {
       $commands .= "cd ".$projectCheckoutGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubCheckoutKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectCheckoutWorkingDirectory." checkout -f ".$ver." 2>&1";
@@ -35,7 +33,8 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
       $file = fopen($lastVersionCheckoutFile, "w");
       fwrite($file, $ver);
       fclose($file);
- //     $output .= shell_exec("mv $githubkeyorigin $githubKey 2>&1; ");
+      $output .= shell_exec("mv $githubkeyorigin $githubKey 2>&1; ");
+      
   } else {
     $message .= "Wrong password";
   }

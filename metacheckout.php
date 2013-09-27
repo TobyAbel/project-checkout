@@ -4,14 +4,13 @@ require_once "metacheckoutconfig.php";
 require_once "checkoutconfig.php";
 
 shell_exec("sudo chmod 777 $homeubuntu -R");
-shell_exec("chown www-data:www-data $homeubuntu -R");
+shell_exec("mkdir $directory");
+shell_exec("mkdir $projectGithubDirectory");
 
 if (file_exists($lastVersionFile)) {
   $lastver = file_get_contents($lastVersionFile); // Get previous file version
 } else {
   $lastver = 0;
-  shell_exec("mkdir $directory");
-  shell_exec("mkdir $projectGithubDirectory");
   shell_exec("touch $lastVersionFile");
   file_put_contents($lastVersionFile, $lastver);
 }
@@ -26,7 +25,7 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
   if ($checkoutPassword == $pas) {
       $message  = 'Boom.'.PHP_EOL.'Last ver = '.$lastver.'<br />';
 
-      $commands = "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectWorkingDirectory." checkout -f ".$ver." 2>&1";
+      $commands = "cd ".$projectCheckoutGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectCheckoutWorkingDirectory." checkout -f ".$ver." 2>&1";
       $output = shell_exec($commands);
       $message .= str_replace(';', ';'.PHP_EOL, $commands).PHP_EOL;
       $message .= $output;

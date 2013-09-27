@@ -9,6 +9,7 @@ if (file_exists($lastVersionFile)) {
 } else {
   $lastver = 0;
   shell_exec("mkdir $directory");
+  shell_exec("mkdir $projectGithubDirectory");
   shell_exec("touch $lastVersionFile");
   file_put_contents($lastVersionFile, $lastver);
 }

@@ -21,23 +21,24 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
 
   $output = '';
 
-  $output .= shell_exec("chmod 777 $homeubuntu");
-  $output .= shell_exec("mkdir $directory");
-  $output .= shell_exec("mkdir $projectCheckoutGithubDirectory");
-  $output .= shell_exec("chmod 777 $projectCheckoutGithubDirectory");
+  $commands = '';
+//  $commands .= "chmod 777 $homeroot 2>&1; ";
+  $commands .= "mkdir $directory 2>&1; ";
+  $commands .= "mkdir $projectCheckoutGithubDirectory 2>&1; ";
+//  $commands .= "chmod 777 $projectCheckoutGithubDirectory 2>&1; ";
 
   if ($checkoutPassword == $pas) {
-      $commands = "cd ".$projectCheckoutGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubCheckoutKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectCheckoutWorkingDirectory." checkout -f ".$ver." 2>&1";
+      $commands .= "cd ".$projectCheckoutGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubCheckoutKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectCheckoutWorkingDirectory." checkout -f ".$ver." 2>&1";
+ //     $commands .= "chmod 700 $homeroot 2>&1; ";
       $output .= shell_exec($commands);
       $message .= str_replace(';', ';'.PHP_EOL, $commands).PHP_EOL;
       $file = fopen($lastVersionCheckoutFile, "w");
       fwrite($file, $ver);
       fclose($file);
-      $output .= shell_exec("mv $githubkeyorigin $githubKey");
+      $output .= shell_exec("mv $githubkeyorigin $githubKey 2>&1; ");
   } else {
     $message .= "Wrong password";
   }
-  $output .= shell_exec("chmod 700 $homeubuntu");
   $message .= $output;
 }
 

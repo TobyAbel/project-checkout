@@ -21,10 +21,10 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
 
   $output = '';
 
-  $output .= shell_exec("sudo chmod 777 $homeubuntu");
+  $output .= shell_exec("chmod 777 $homeubuntu");
   $output .= shell_exec("mkdir $directory");
   $output .= shell_exec("mkdir $projectCheckoutGithubDirectory");
-  $output .= shell_exec("sudo chmod 777 $projectCheckoutGithubDirectory");
+  $output .= shell_exec("chmod 777 $projectCheckoutGithubDirectory");
 
   if ($checkoutPassword == $pas) {
       $commands = "cd ".$projectCheckoutGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubCheckoutKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectCheckoutWorkingDirectory." checkout -f ".$ver." 2>&1";
@@ -37,7 +37,7 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
   } else {
     $message .= "Wrong password";
   }
-  $output .= shell_exec("sudo chmod 700 $homeubuntu");
+  $output .= shell_exec("chmod 700 $homeubuntu");
   $message .= $output;
 }
 

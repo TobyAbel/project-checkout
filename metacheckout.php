@@ -35,7 +35,7 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
       $file = fopen($lastVersionCheckoutFile, "w");
       fwrite($file, $ver);
       fclose($file);
-      $output .= shell_exec("mv $githubkeyorigin $githubKey 2>&1; ");
+ //     $output .= shell_exec("mv $githubkeyorigin $githubKey 2>&1; ");
   } else {
     $message .= "Wrong password";
   }

@@ -3,7 +3,7 @@
 // Test
 
 require_once "checkoutconfig.php";
-$message = '';
+
 
 if(!file_exists($directory)){
   mkdir($directory);
@@ -28,6 +28,7 @@ if (file_exists($lastVersionFile)) {
 }
 
 $message = 'Last ver = '.$lastver;
+$message .= 'Placeholder 1';
 if (isset($_POST['version']) && isset($_POST['password'])) {
   $ver = $_POST['version'];
   $pas = $_POST['password'];

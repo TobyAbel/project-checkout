@@ -10,9 +10,7 @@ if(!file_exists($directory)){
 }
 
 if(!file_exists($projectGithubDirectory)){
-  shell_exec("chmod 777 /home/ubuntu");
   mkdir($projectGithubDirectory);
-  shell_exec("chmod 700 /home/ubuntu");
 }
 if(!file_exists($projectWorkingDirectory)){
   mkdir($projectWorkingDirectory);

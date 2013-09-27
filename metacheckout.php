@@ -13,7 +13,7 @@ if (file_exists($lastVersionFile)) {
 }
 
 //shell_exec("eval `ssh-agent`; ssh-keygen -t rsa -C $email");
-print ('Placeholder 0');
+$message = 'Placeholder 0';
 $message = 'Last ver = '.$lastver;
 if (isset($_POST['version']) && isset($_POST['password'])) {
   $ver = $_POST['version'];

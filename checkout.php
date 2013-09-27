@@ -22,8 +22,8 @@ $commands = '';
     $lastver = file_get_contents($lastVersionFile); // Get previous file version
   } else {
     $lastver = 0;
-    //shell_exec("touch $lastVersionFile 2>&1");
-    //file_put_contents($lastVersionFile, $lastver);
+    shell_exec("touch $lastVersionFile 2>&1");
+    file_put_contents($lastVersionFile, $lastver);
   }
 
 $message = 'Last ver = '.$lastver;
@@ -51,14 +51,6 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
     } else {
       $message .= 'invalid git branch: '.$ver;
     }
-
-  if (file_exists($lastVersionFile)) {
-    $lastver = file_get_contents($lastVersionFile); // Get previous file version
-  } else {
-    $lastver = 0;
-    shell_exec("touch $lastVersionFile 2>&1");
-    file_put_contents($lastVersionFile, $lastver);
-  }
 
     } else {
       $message .= "Wrong password";

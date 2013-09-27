@@ -6,5 +6,5 @@
 	$github = "git@github.com:peterbrescia/clonerepo.git";		//Github project location.
 	$directory = "/home/www-data/clonedirectory";
 	$lastVersionFile = "/home/www-data/clonedirectory/lastversion.php";
-	$githubkeyorigin = "/var/www/project-checkout/clonerepokey"
+	$githubkeyorigin = "/var/www/project-checkout/clonerepokey";
 ?>

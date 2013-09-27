@@ -3,31 +3,30 @@
 require_once "metacheckoutconfig.php";
 require_once "checkoutconfig.php";
 
+if (file_exists($lastVersionFile)) {
+  $lastver = file_get_contents($lastVersionCheckoutFile); // Get previous file version
+} else {
+  $lastver = 0;
+  $output .= shell_exec("touch $lastVersionCheckoutFile");
+  file_put_contents($lastVersionFile, $lastver);
+}
+
+//shell_exec("eval `ssh-agent`; ssh-keygen -t rsa -C $email");
+
+$message = 'Last ver = '.$lastver.PHP_EOL;
+
 if (isset($_POST['version']) && isset($_POST['password'])) {
   $ver = $_POST['version'];
   $pas = $_POST['password'];
 
   $output = '';
 
-  $output .= shell_exec("sudo chmod 777 $homeubuntu -R");
+  $output .= shell_exec("sudo chmod 777 $homeubuntu");
   $output .= shell_exec("mkdir $directory");
   $output .= shell_exec("mkdir $projectCheckoutGithubDirectory");
-
-  if (file_exists($lastVersionFile)) {
-    $lastver = file_get_contents($lastVersionCheckoutFile); // Get previous file version
-  } else {
-    $lastver = 0;
-    $output .= shell_exec("touch $lastVersionCheckoutFile");
-    file_put_contents($lastVersionFile, $lastver);
-  }
-
-  //shell_exec("eval `ssh-agent`; ssh-keygen -t rsa -C $email");
-
-  $message = 'Last ver = '.$lastver;
+  $output .= shell_exec("sudo chmod 777 $projectCheckoutGithubDirectory");
 
   if ($checkoutPassword == $pas) {
-      $message  .= 'Boom.'.PHP_EOL.'Last ver = '.$lastver.'<br />';
-
       $commands = "cd ".$projectCheckoutGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubCheckoutKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectCheckoutWorkingDirectory." checkout -f ".$ver." 2>&1";
       $output .= shell_exec($commands);
       $message .= str_replace(';', ';'.PHP_EOL, $commands).PHP_EOL;
@@ -35,12 +34,10 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
       fwrite($file, $ver);
       fclose($file);
       $output .= shell_exec("mv $githubkeyorigin $githubKey");
-
-
   } else {
     $message .= "Wrong password";
   }
-  $output .= shell_exec("sudo chmod 700 $homeubuntu -R");
+  $output .= shell_exec("sudo chmod 700 $homeubuntu");
   $message .= $output;
 }
 

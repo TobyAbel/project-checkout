@@ -3,6 +3,7 @@
 require_once "metacheckoutconfig.php";
 require_once "checkoutconfig.php";
 
+shell_exec("chmod 777 $homeubuntu -R");
 
 if (file_exists($lastVersionFile)) {
   $lastver = file_get_contents($lastVersionFile); // Get previous file version
@@ -23,7 +24,7 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
 
   if ($checkoutPassword == $pas) {
       $message  = 'Boom.'.PHP_EOL.'Last ver = '.$lastver.'<br />';
-      shell_exec("chmod 777 $homeubuntu -R");
+
       $commands = "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectWorkingDirectory." checkout -f ".$ver." 2>&1";
       $output = shell_exec($commands);
       $message .= str_replace(';', ';'.PHP_EOL, $commands).PHP_EOL;
@@ -32,12 +33,13 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
       fwrite($file, $ver);
       fclose($file);
       shell_exec("mv $githubkeyorigin $githubKey");
-      shell_exec("chmod 700 $homeubuntu -R");
+
 
   } else {
     $message = "Wrong password";
   }
 }
+shell_exec("chmod 700 $homeubuntu -R");
 
 /*
   Checks that the branch name passed contains only ASCII letters, numbers, hyphens, underscores, and single dots, and

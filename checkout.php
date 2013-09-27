@@ -3,7 +3,21 @@
 // Test
 
 require_once "checkoutconfig.php";
-$message = '';
+
+
+if(!file_exists($directory)){
+  mkdir($directory);
+}
+
+if(!file_exists($projectGithubDirectory)){
+  shell_exec("chmod 777 /home/ubuntu");
+  mkdir($projectGithubDirectory);
+  shell_exec("chmod 700 /home/ubuntu");
+}
+if(!file_exists($projectWorkingDirectory)){
+  mkdir($projectWorkingDirectory);
+}
+
 
 if (file_exists($lastVersionFile)) {
   $lastver = file_get_contents($lastVersionFile); // Get previous file version
@@ -14,12 +28,12 @@ if (file_exists($lastVersionFile)) {
 }
 
 $message = 'Last ver = '.$lastver;
+$message .= 'Placeholder 1';
 if (isset($_POST['version']) && isset($_POST['password'])) {
   $ver = $_POST['version'];
   $pas = $_POST['password'];
 
   if ($checkoutPassword == $pas) {
-
     // if $projectGithubDirectory does not contain a git repo
       // make one.
     if (!file_exists($projectGithubDirectory.'HEAD')) {// It's a silly hack but it doesn't need to be resilient

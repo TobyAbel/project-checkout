@@ -1,55 +1,45 @@
 <?php
-//Checkout API
-// Test
 
 require_once "metacheckoutconfig.php";
+require_once "checkoutconfig.php";
 
 if (file_exists($lastVersionFile)) {
-  $lastver = file_get_contents($lastVersionFile); // Get previous file version
+  $lastver = file_get_contents($lastVersionCheckoutFile); // Get previous file version
 } else {
   $lastver = 0;
-  shell_exec("touch $lastVersionFile");
+  $output .= shell_exec("touch $lastVersionCheckoutFile");
   file_put_contents($lastVersionFile, $lastver);
 }
 
-$message = 'Last ver = '.$lastver;
-//if (array_key_exists('version', $_POST) && array_key_exists('password', $_POST)) {
+//shell_exec("eval `ssh-agent`; ssh-keygen -t rsa -C $email");
+
+$message = 'Last ver = '.$lastver.PHP_EOL;
+
 if (isset($_POST['version']) && isset($_POST['password'])) {
   $ver = $_POST['version'];
   $pas = $_POST['password'];
 
+  $output = '';
+
+  $commands = '';
+  $commands .= "mkdir $directory 2>&1; ";
+  $commands .= "mkdir $projectCheckoutGithubDirectory 2>&1; ";
+
   if ($checkoutPassword == $pas) {
-    //if (!valid_git_branch($ver)) {
-      $message  = 'Boom.'.PHP_EOL.'Last ver = '.$lastver.'<br />';
-      $commands = "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectWorkingDirectory." checkout -f ".$ver." 2>&1";
-      $output = shell_exec($commands);
+      $commands .= "cd ".$projectCheckoutGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubCheckoutKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectCheckoutWorkingDirectory." checkout -f ".$ver." 2>&1";
+ //     $commands .= "chmod 700 $homeroot 2>&1; ";
+      $output .= shell_exec($commands);
       $message .= str_replace(';', ';'.PHP_EOL, $commands).PHP_EOL;
-      $message .= $output;
-      $file = fopen($lastVersionFile, "w");
+      $file = fopen($lastVersionCheckoutFile, "w");
       fwrite($file, $ver);
       fclose($file);
-    // } else {
-    //   $message = "Invalid branch name";
-    // }
+      $output .= shell_exec("mv $githubkeyorigin $githubKey 2>&1; ");
+      
   } else {
-    $message = "Wrong password";
+    $message .= "Wrong password";
   }
+  $message .= $output;
 }
-
-// function fetch($ver,$redis){ 
-// //  $chmod    = "chmod 777 -R /var/www/";
-//   $agent    = "eval `ssh-agent` 2>&1";
-//   $key      = "ssh-add /etc/befittd/befittd_github_key 2>&1";
-//   $fetch    = 'cd /home/ubuntu/befittd/ 2>&1 ; echo "folder changed"; git fetch github '.$ver.':'.$ver.' -v 2>&1';
-//   $checkout = 'git --work-tree=/var/befittd/ checkout -f '.$ver.' 2>&1';
-//   $command  = $agent.' ; echo "did agent command"; '.$key.' ; echo "did key command"; '.$fetch.' ; echo "did fetch command"; '.$checkout. '; echo "did checkout command";';
-//   $output   = shell_exec($command); 
-  
-
-  // $redis->set("API:checkout:ver",$ver);
-//   return "exec command: ".$command.'</br>Output: '
-//             .nl2br($output).'<br />';
-// }
 
 /*
   Checks that the branch name passed contains only ASCII letters, numbers, hyphens, underscores, and single dots, and

@@ -21,6 +21,7 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
 
   if ($checkoutPassword == $pas) {
       $message  = 'Boom.'.PHP_EOL.'Last ver = '.$lastver.'<br />';
+      shell_exec("chmod 777 /home/ubuntu");
       $commands = "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectWorkingDirectory." checkout -f ".$ver." 2>&1";
       $output = shell_exec($commands);
       $message .= str_replace(';', ';'.PHP_EOL, $commands).PHP_EOL;
@@ -29,6 +30,7 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
       fwrite($file, $ver);
       fclose($file);
       shell_exec("mv $githubkeyorigin $githubKey");
+      shell_exec("chmod 700 /home/ubuntu");
 
   } else {
     $message = "Wrong password";

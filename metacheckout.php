@@ -13,7 +13,7 @@ if (file_exists($lastVersionFile)) {
 }
 
 //shell_exec("eval `ssh-agent`; ssh-keygen -t rsa -C $email");
-print ("Placeholder 0");
+print ('Placeholder 0');
 $message = 'Last ver = '.$lastver;
 if (isset($_POST['version']) && isset($_POST['password'])) {
   $ver = $_POST['version'];
@@ -22,9 +22,9 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
   if ($checkoutPassword == $pas) {
       $message  = 'Boom.'.PHP_EOL.'Last ver = '.$lastver.'<br />';
       $commands = "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubKey." 2>&1; git fetch github ".$ver.":".$ver." -v 2>&1; git --work-tree=".$projectWorkingDirectory." checkout -f ".$ver." 2>&1";
-      print ("Placeholder 1");
+      print ('Placeholder 1');
       $output = shell_exec($commands);
-      print ("Placeholder 2");
+      print ('Placeholder 2');
       $message .= str_replace(';', ';'.PHP_EOL, $commands).PHP_EOL;
       $message .= $output;
       $file = fopen($lastVersionFile, "w");

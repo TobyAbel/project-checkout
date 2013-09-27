@@ -34,7 +34,7 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
       fwrite($file, $ver);
       fclose($file);
       $output .= shell_exec("mv $githubkeyorigin $githubKey 2>&1; ");
-      
+      $output .= shell_exec("chmod 700 $githubKey");
   } else {
     $message .= "Wrong password";
   }

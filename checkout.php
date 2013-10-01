@@ -12,6 +12,7 @@ if(!file_exists($projectWorkingDirectory)){
 }
 
 $commands = '';
+$commands .= "sudo chmod 777 $projectGithubDirectory;";
 $commands .= "sudo chmod 777 $projectWorkingDirectory;";
   if (file_exists($lastVersionFile)) {
     $lastver = file_get_contents($lastVersionFile); // Get previous file version

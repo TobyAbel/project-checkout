@@ -8,7 +8,6 @@
 	$githubKey = "/home/www-data/.ssh/$keyname";
 	$projectGithubDirectory = "/home/www-data/$reponame";		//Project github directory
 	$github = "git@github.com:peterbrescia/$reponame.git";		//Github project location.
-	$remotename = $reponame;
 	$lastVersionFile = "/home/www-data/$reponame/lastversion.php";
 	$githubkeyorigin = "/var/www/project-checkout/$keyname";
 	$projectWorkingDirectory = "/var/git-working-directory/";

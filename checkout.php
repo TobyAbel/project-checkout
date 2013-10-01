@@ -109,11 +109,11 @@ function valid_git_branch($branch_name) {
     
 <head>
   <meta charset="utf-8" />
-  <title>NFC Server checkout API (nfc-members-card)</title>
+  <title>Server Checkout API</title>
 </head>  
    
 <body>
-  <h3>NFC checkout API</h3>
+  <h3>Server Checkout API</h3>
   <div id="password-reset-box">
     <div id="passwords-div">
       <h4>Please enter password and Branch version:</h4>

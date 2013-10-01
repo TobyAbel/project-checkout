@@ -21,7 +21,7 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
   $ver = $_POST['version'];
   $pas = $_POST['password'];
   $commands = '';
-  $commands .= "mkdir $directory 2>&1; ";
+  $commands .= "mkdir $projectGithubDirectory 2>&1; ";
   $commands .= "mkdir $projectCheckoutGithubDirectory 2>&1; ";
 
   if ($checkoutPassword == $pas) {

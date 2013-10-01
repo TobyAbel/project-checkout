@@ -35,7 +35,7 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
     // if $projectGithubDirectory does not contain a git repo
       // make one.
     if (!file_exists($projectGithubDirectory.'HEAD')) {// It's a silly hack but it doesn't need to be resilient
-      $commands .= "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent` 2>&1; ssh-add ".$githubKey." 2>&1; git clone --bare ".$github." ./ 2>&1; git remote add github ".$github." 2>&1;";
+      $commands .= "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent` 2>&1; ssh-add ".$githubKey." 2>&1; git clone --bare ".$github." ./ 2>&1; git remote add github ".$remotename." 2>&1;";
       $output = shell_exec($commands);
       $message .= $commands.PHP_EOL.$output.PHP_EOL;
     }

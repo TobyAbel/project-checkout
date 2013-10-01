@@ -11,6 +11,7 @@
 	$projectWorkingDirectory = "/var/www/$webroot";
 	$github = "git@github.com:peterbrescia/$reponame.git";		//Github project location.
 	$directory = "/home/www-data/$reponame/";
+	$remotename = $reponame;
 	$lastVersionFile = "/home/www-data/$reponame/lastversion.php";
 	$githubkeyorigin = "/var/www/project-checkout/$keyname";
 ?>

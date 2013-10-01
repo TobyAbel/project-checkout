@@ -17,7 +17,7 @@ if(!file_exists($projectWorkingDirectory)){
 }
 
 $commands = '';
-
+$commands .= "sudo chmod 777 $projectWorkingDirectory;";
   if (file_exists($lastVersionFile)) {
     $lastver = file_get_contents($lastVersionFile); // Get previous file version
   } else {
@@ -26,7 +26,7 @@ $commands = '';
 //    file_put_contents($lastVersionFile, $lastver);
   }
 
-$message = 'Last ver = '.$lastver;
+$message = "Last ver = $lastver";
 if (isset($_POST['version']) && isset($_POST['password'])) {
   $ver = $_POST['version'];
   $pas = $_POST['password'];
@@ -35,13 +35,13 @@ if (isset($_POST['version']) && isset($_POST['password'])) {
     // if $projectGithubDirectory does not contain a git repo
       // make one.
     if (!file_exists($projectGithubDirectory.'HEAD')) {// It's a silly hack but it doesn't need to be resilient
-      $commands .= "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent` 2>&1; ssh-add ".$githubKey." 2>&1; git clone --bare ".$github." ./ 2>&1; git remote add $remotename ".$github." 2>&1;";
+      $commands .= "cd $projectGithubDirectory 2>&1; eval `ssh-agent` 2>&1; ssh-add $githubKey 2>&1; git clone --bare $github ./ 2>&1; git remote add $remotename $github 2>&1;";
       $output = shell_exec($commands);
       $message .= $commands.PHP_EOL.$output.PHP_EOL;
     }
     if (valid_git_branch($ver)) {
       $message  .= 'Last ver = '.$lastver.'<br />';
-      $commands .= "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add ".$githubKey." 2>&1; git fetch github ".$ver.":".$ver." 2>&1; git --work-tree=".$projectWorkingDirectory." checkout -f ".$ver." 2>&1";
+      $commands .= "cd ".$projectGithubDirectory." 2>&1; eval `ssh-agent`; ssh-add $githubKey 2>&1; git fetch github $ver:$ver 2>&1; git --work-tree=$projectWorkingDirectory checkout -f $ver 2>&1";
       $output = shell_exec($commands);
       $message .= str_replace(';', ';'.PHP_EOL, $commands).PHP_EOL;
       $message .= $output;

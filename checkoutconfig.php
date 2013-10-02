@@ -1,6 +1,6 @@
 <?php
 	//Edit these only!
-	$reponame = "testing";
+	$reponame = "unicorn";
 	$keyname = "clonekey";
 	//End Editable variables.
 
@@ -10,5 +10,5 @@
 	$github = "git@github.com:peterbrescia/$reponame.git";		//Github project location.
 	$lastVersionFile = "/home/www-data/$reponame/lastversion.php";
 	$githubkeyorigin = "/var/www/project-checkout/$keyname";
-	$projectWorkingDirectory = "/var/git-working-directory/";
+	$projectWorkingDirectory = "/var/git-working-directory/www/wordpress/wp-content/themes/unicorn";
 ?>
